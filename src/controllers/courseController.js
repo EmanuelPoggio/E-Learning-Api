@@ -1,5 +1,5 @@
 const courses = [];
-let availableCourses = [" "]; //se declara el array con un valor, sino se rompe al hacer .push
+let availableCourses = [" "]; 
 
 function getAllCourses(req, res) {
     return res.status(200).json(courses); 
@@ -7,7 +7,7 @@ function getAllCourses(req, res) {
 function createCourse(req, res) {
     const { name, description, lessons} = req.body;
     if (!name || !description){
-    return res.status(400).json({error:"El nombre y descripcion del curso son obligatorios"});
+    return res.status(400).json({error:"The name and description of the course are required"});
     }
 
     const newCourse = {
@@ -28,7 +28,7 @@ function updateCourse(req, res) {
 	const {name, description, lessons} = req.body;	
 	const courseIndex = courses.findIndex(course => course.id === parseInt(courseId));	
 	if (courseIndex === -1) {
-    return res.status(404).json({error: "Curso no encontrado, revise el ID"});
+    return res.status(404).json({error: "Course not found, check ID"});
 	}
 	courses[courseIndex].name = name;
 	courses[courseIndex].description = description;
@@ -41,16 +41,16 @@ function deleteCourse(req, res) {
 	const courseIndex = courses.findIndex(course => course.id === parseInt(courseId));
 
 	if (courseIndex === -1) {
-    return res.status(404).json({error:"Curso no encontrado, por favor, revise el ID"});
+    return res.status(404).json({error:"Course not found, please check the course ID"});
 	}
 	const deletedCourse = courses.splice(courseIndex,1)[0];
-	return res.status(200).json({message: "Curso eliminado correctamente", course: deletedCourse});
+	return res.status(200).json({message: "Course succesdsfully delete", course: deletedCourse});
 }
 function getCourseByName(req, res) {
     const  { name }  = req.params;
     const course = courses.find(course => course.name === name);
     if (!course) {
-        return res.status(404).json({ error: 'Curso no encontrado. Verifique el nombre ingresado o verifique si el curso existe' });
+        return res.status(404).json({ error: 'Course not found. Verify the name entered or check if the course exists.' });
     }
 
     return res.status(200).json(course);

@@ -11,7 +11,7 @@ function createQuestion(req, res) {
 
     const invalidLesson = relatedLesson.filter(lesson => !availableLessons.includes(lesson));
     if (invalidLesson.length > 0) {
-        return res.status(400).json({ error: 'Las siguientes lecciones no existen: ' + invalidLesson.join(', ') });
+        return res.status(400).json({ error: 'The following lessons do not exist: ' + invalidLesson.join(', ') });
     }
 
     const newQuestion = {
@@ -32,11 +32,11 @@ function updateQuestion(req, res) {
 
     const invalidLesson = relatedLesson.filter(lesson => !availableLessons.includes(lesson));
     if (invalidLesson.length > 0) {
-        return res.status(400).json({ error: 'Las siguientes lecciones no existen: ' + invalidLesson.join(', ') });
+        return res.status(400).json({ error: 'The following lessons do not exist: ' + invalidLesson.join(', ') });
     }
 
 	if (questionIndex === -1) {
-    return res.status(404).json({error: "Pregunta no encontrada, revise el ID"});
+    return res.status(404).json({error: "Question not found, check ID"});
 	}
 
     questions[questionIndex].relatedLesson = relatedLesson;
@@ -50,10 +50,10 @@ function deleteQuestion(req, res) {
     const questionIndex = questions.findIndex(question => question.id === parseInt(questionId));
 
     if (questionIndex === -1) {
-        return res.status(404).json({error: "Pregunta no encontrada, por favor,revise el ID"});
+        return res.status(404).json({error: "Question not found, please check the ID."});
     }
     const deletedQuestion = questions.splice(questionIndex,1)[0];
-    return res.status(200).json({message: "Pregunta eliminada correctamente", question: deleteQuestion})
+    return res.status(200).json({message: "Question correctly eliminated", question: deleteQuestion})
 }
 function getQuestionsByLesson(req, res){
     const { name } = req.params;
@@ -61,7 +61,7 @@ function getQuestionsByLesson(req, res){
     const lesson = lessons.find(lesson => lesson.name === name);
 
     if (!lesson) {
-        return res.status(404).json({ error: 'Lección no encontrada' });
+        return res.status(404).json({ error: 'Lesson not found' });
     }
 
     const relatedQuestion = questions

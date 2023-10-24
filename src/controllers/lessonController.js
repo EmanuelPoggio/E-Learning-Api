@@ -10,12 +10,12 @@ function getAllLessons(req, res) {
 function createLesson(req, res) {
     const {relatedCourse, name, description} = req.body;
     if (!name || !description){
-    return res.status(400).json({error:"El nombre y descripcion de la leccion son obligatorias"});
+    return res.status(400).json({error:"The name and description of the lesson are mandatory."});
     }
 
     const invalidCourses = relatedCourse.filter(course => !availableCourses.includes(course));
     if (invalidCourses.length > 0) {
-        return res.status(400).json({ error: 'Los siguientes cursos no existen: ' + invalidCourses.join(', ') });
+        return res.status(400).json({ error: 'The following courses do not exist: ' + invalidCourses.join(', ') });
     }
 
     const newLesson = {
@@ -35,11 +35,11 @@ function updateLesson(req, res) {
 	const {relatedCourse, name, description} = req.body;	
 	const lessonIndex = lessons.findIndex(lessons => lessons.id === parseInt(lessonId));	
 	if (lessonIndex === -1) {
-    return res.status(404).json({error: "Leccion no encontrada, revise el ID"});
+    return res.status(404).json({error: "Lesson not found, check ID"});
 	}
     const invalidCourses = relatedCourse.filter(course => !availableCourses.includes(course));
     if (invalidCourses.length > 0) {
-        return res.status(400).json({ error: 'Los siguientes cursos no existen: ' + invalidCourses.join(', ') });
+        return res.status(400).json({ error: 'The following courses do not exist:' + invalidCourses.join(', ') });
     }
 	lessons[lessonIndex].relatedCourse = relatedCourse;
 	lessons[lessonIndex].name = name;
@@ -52,10 +52,10 @@ function deleteLesson(req, res) {
 	const lessonIndex = lessons.findIndex(lesson => lesson.id === parseInt(lessonId));
 
 	if (lessonIndex === -1) {
-    return res.status(404).json({error:"Leccion no encontrada, por favor, revise el ID"});
+    return res.status(404).json({error:"Lesson not found, please check ID"});
 	}
 	const deletedLesson = lessons.splice(lessonIndex,1)[0];
-	return res.status(200).json({message: "Leccion eliminada correctamente", course: deleteLesson});
+	return res.status(200).json({message: "Lesson successfully deleted", course: deleteLesson});
 }
 function getLessonsWithCourseAndUsers(req, res){
     const { name } = req.params;
@@ -63,7 +63,7 @@ function getLessonsWithCourseAndUsers(req, res){
     const course = courses.find(course => course.name === name);
 
     if (!course) {
-        return res.status(404).json({ error: 'Curso no encontrado' });
+        return res.status(404).json({ error: 'Course not found' });
     }
 
     const enrolledUsers = users
