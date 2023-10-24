@@ -1,5 +1,5 @@
 const lessons = [];
-let availableLessons = ["Leccion I"]; 
+let availableLessons = [" "]; 
 const { availableCourses } = require('./courseController');
 const { users } = require('./userController');
 const { courses }  = require('./courseController');
@@ -26,6 +26,7 @@ function createLesson(req, res) {
     };
 
     lessons.push(newLesson);
+    availableLessons.push(name);
 
     return res.status(201).json(newLesson);
 }
@@ -36,12 +37,10 @@ function updateLesson(req, res) {
 	if (lessonIndex === -1) {
     return res.status(404).json({error: "Leccion no encontrada, revise el ID"});
 	}
-
     const invalidCourses = relatedCourse.filter(course => !availableCourses.includes(course));
     if (invalidCourses.length > 0) {
         return res.status(400).json({ error: 'Los siguientes cursos no existen: ' + invalidCourses.join(', ') });
     }
-
 	lessons[lessonIndex].relatedCourse = relatedCourse;
 	lessons[lessonIndex].name = name;
 	lessons[lessonIndex].description = description;

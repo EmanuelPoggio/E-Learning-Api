@@ -1,5 +1,5 @@
 const courses = [];
-let availableCourses = ["Logica"]; //se declara el array con un valor, sino se rompe al hacer .push
+let availableCourses = [" "]; //se declara el array con un valor, sino se rompe al hacer .push
 
 function getAllCourses(req, res) {
     return res.status(200).json(courses); 

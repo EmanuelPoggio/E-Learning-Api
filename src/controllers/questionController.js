@@ -1,5 +1,6 @@
 const questions = [];
 const { availableLessons } = require('./lessonController');
+const { lessons }  = require('./lessonController');
 
 
 function getAllQuestions(req, res) {
@@ -57,21 +58,21 @@ function deleteQuestion(req, res) {
 function getQuestionsByLesson(req, res){
     const { name } = req.params;
 
-    const course = courses.find(course => course.name === name);
+    const lesson = lessons.find(lesson => lesson.name === name);
 
-    if (!course) {
-        return res.status(404).json({ error: 'Curso no encontrado' });
+    if (!lesson) {
+        return res.status(404).json({ error: 'Lección no encontrada' });
     }
 
-    const enrolledUsers = users
-    .filter(user => user.enrolledCourses.includes(course.name))
-    .map(user => {
-        const {id, name, email, role, enrolledCourses} = user;
-        return {id, name, email, role, enrolledCourses};
+    const relatedQuestion = questions
+    .filter(Thequestion => Thequestion.relatedLesson.includes(lesson.name))
+    .map(Thequestion => {
+        const {id, relatedLesson, question, answer} = Thequestion;
+        return {id, question, answer};
     });
 
-    const relatedLesson = lessons.filter(lesson => lesson.relatedCourse.includes(course.name));
-    return res.status(200).json({ course, enrolledUsers, relatedLesson });
+    //const relatedQuestion = questions.filter(question => question.relatedLesson.includes(lesson.name));
+    return res.status(200).json({ lesson, relatedQuestion });
 }
 
 module.exports = {
@@ -79,4 +80,5 @@ module.exports = {
     createQuestion,
     updateQuestion,
     deleteQuestion,
+    getQuestionsByLesson,
 };
