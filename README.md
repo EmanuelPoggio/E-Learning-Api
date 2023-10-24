@@ -9,11 +9,11 @@ HOW TO USE
     - Abre la terminal y ejecuta
         - node -v
         - npm -v
-3. Nos dirigmos a la carpeta raiz del proyecto e inicialice con el comando 
+3. Nos dirigimos a la carpeta raiz del proyecto e inicialice desde la terminal con los siguientes comandos:
     1. “npm install”
     2. “node src/server.js “
         - Debera aparecer el siguiente mensaje “Server is running on port 3000”
-4. Dirigase a Postman, ThunderClient o su herramienta favorita para realizar las peticiones y pruebas de Endpoints.
+4. Nos dirigimos a Postman, ThunderClient o nuestra herramienta favorita para realizar las peticiones y pruebas de Endpoints.
 <---------------------------------------------------------------------------------------------------------------------------->
 Verbos HTTP la API: 
 
