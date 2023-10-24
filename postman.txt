@@ -1,36 +1,28 @@
-//Courses post:
+"//"Courses post
 {
     "name": "Matematicas",
     "description": "descripcion del cursoo",
     "lessons": "lecciones que contienee"
 }
-//Users post:
+"//"Users post
 {
-  "name": "Nombre del usuario",
-  "dni": "Número de identificación",
-  "email": "correo@ejeemplo.como",
-  "password": "contraseña",
-  "role": "estudiante",
-  "enrolledCourses": ["Matematicas"]
+    "name": "Nombre del usuario",
+    "dni": "Número de identificación",
+    "email": "correo@ejeemplo.como",
+    "password": "contraseña",
+    "role": "estudiante",
+    "enrolledCourses": ["Matematicas"]
 }
-//Users get:
-http://localhost:3000/api/users/correo@ejemplo.com
-
-//Lessons post
+"//"Lesson post
 {
     "name": "Leccion I",
     "description": "descripcion de la leccion",
     "relatedCourse": ["Matematicas"]
 }
 
-//Lessons get
-http://localhost:3000/api/lessons/Matematicas
-
-
-
-//Question post
+"//"Question post
 {
-    "relatedLesson": "Leccion I",
+    "relatedLesson": ["Leccion I"],
     "question": "¿Cuanto es la raiz cuadrada de 8?",
     "answer": "2.82"
 }
