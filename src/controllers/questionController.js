@@ -1,34 +1,46 @@
 const questions = [];
+const { availableLessons } = require('./lessonController');
+
 
 function getAllQuestions(req, res) {
     return res.status(200).json(questions); 
 }
 function createQuestion(req, res) {
-    const { name, description } = req.body;
+    const { relatedLesson, question, answer } = req.body;
 
-    if (!name || !description){
-        return res.status(400).json({error:"El nombre y descripcion de la pregunta son obligatorios"});
+    const invalidLesson = relatedLesson.filter(lesson => !availableLessons.includes(lesson));
+    if (invalidLesson.length > 0) {
+        return res.status(400).json({ error: 'Las siguientes lecciones no existen: ' + invalidLesson.join(', ') });
     }
+
     const newQuestion = {
         id: questions.length + 1,
-        name: name,
-        description: description,
+        relatedLesson: relatedLesson,
+        question: question,
+        answer: answer,
         };
 
     questions.push(newQuestion);
 
     return res.status(201).json(newQuestion);
 }
-
 function updateQuestion(req, res) {
     const questionId = req.params.id;
-	const {name, description} = req.body;	
-	const questionIndex = questions.findIndex(question => question.id === parseInt(questionId));	
+	const {relatedLesson, question, answer} = req.body;	
+	const questionIndex = questions.findIndex(question => question.id === parseInt(questionId));
+
+    const invalidLesson = relatedLesson.filter(lesson => !availableLessons.includes(lesson));
+    if (invalidLesson.length > 0) {
+        return res.status(400).json({ error: 'Las siguientes lecciones no existen: ' + invalidLesson.join(', ') });
+    }
+
 	if (questionIndex === -1) {
     return res.status(404).json({error: "Pregunta no encontrada, revise el ID"});
 	}
-	questions[questionIndex].name = name;
-	questions[questionIndex].description = description;
+    
+    questions[questionIndex].relatedLesson = relatedLesson;
+	questions[questionIndex].question = question;
+	questions[questionIndex].answer = answer;
 
 	return res.status(200).json(questions[questionIndex]);
 }

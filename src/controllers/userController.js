@@ -1,52 +1,89 @@
-const User = require('../models/User');
+const users = [];
 const bcrypt = require('bcrypt');
-const Course = require('../models/Courses');
+const { availableCourses } = require('./courseController');
 
 async function registerUser(req, res) {
-    try {
-        const { name, dni, email, password, role, enrolledCourses} = req.body;
-        const existingUser = await User.findOne({ email });
-            if (existingUser) {
-                return res.status(400).json({ error: 'El usuario ya está registrado.' });
-            }
-        if (!Array.isArray(enrolledCourses)){
-            return res.status(400).json({error:"enrolledCourses debe ser un array"});
-        }
-        const existingCourses = await Course.find({name: {$in: enrolledCourses}});
-        const existingCoursesNames = existingCourses.map(course => course.name);
+    const {name, dni, email, password, role, enrolledCourses} = req.body;
+    if (!name || !email){
+    return res.status(400).json({error:"El nombre y email del usuario son obligatorios"});
+    }
 
-        const invalidCourses = enrolledCourses.filter(course => !existingCoursesNames.includes(course));
-        if (invalidCourses.lenght > 0){
-            return res.status(400).json({ error: `Los siguientes cursos no existen: ${invalidCourses.join(', ')}` });
-        }
+    const invalidCourses = enrolledCourses.filter(course => !availableCourses.includes(course));
+    if (invalidCourses.length > 0) {
+        return res.status(400).json({ error: 'Los siguientes cursos no existen: ' + invalidCourses.join(', ') });
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user = new User({
-        name,
-        dni,
-        email,
-        password: hashedPassword,
-        role,
-        enrolledCourses: enrolledCourses,
-    });
-    await user.save();
-        return res.status(201).json({ message: 'Usuario registrado correctamente.' });
-    } catch (error) {
-    console.error(error);
-        return res.status(500).json({ error: 'Error al registrar el usuario.' });
-    }
+    const newUser = {
+    id: users.length + 1,
+    name,
+    dni,
+    email,
+    password: hashedPassword,
+    role,
+    enrolledCourses: enrolledCourses,
+    };
+
+    users.push(newUser);
+
+    return res.status(201).json(newUser);
 }
-async function getAllUsers(req, res) {
-    try {
-        const users = await User.find({}, 'name dni email role enrolledCourses'); 
-        return res.status(200).json(users);
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ error: 'Error al obtener la lista de usuarios.' });
-    }
+function getAllUsers(req, res) {
+    return res.status(200).json(users); 
 }
+function updateUser(req, res) {
+	const userId = req.params.id;
+	const {name, dni, email, password, role, enrolledCourses} = req.body;	
+	const userIndex = users.findIndex(user => user.id === parseInt(userId));	
+    if (userIndex === -1) {
+        return res.status(404).json({error: "Usuario no encontrado, revise el ID"});
+	}
+
+    const invalidCourses = enrolledCourses.filter(course => !availableCourses.includes(course));
+    if (invalidCourses.length > 0) {
+        return res.status(400).json({ error: 'Los siguientes cursos no existen: ' + invalidCourses.join(', ') });
+    }
+
+	users[userIndex].name = name;
+	users[userIndex].dni = dni;
+	users[userIndex].email = email;
+    users[userIndex].password = password;
+    users[userIndex].role = role;
+    users[userIndex].enrolledCourses = enrolledCourses;
+
+	return res.status(200).json(users[userIndex]);
+
+}
+function deleteUser(req, res) {
+	const userId = req.params.id;
+	const userIndex = users.findIndex(user => user.id === parseInt(userId));
+
+	if (userIndex === -1) {
+    return res.status(404).json({error:"Usuario no encontrado, por favor, revise el ID"});
+	}
+	const deletedUser = users.splice(userIndex,1)[0];
+	return res.status(200).json({message: "Usuario eliminado correctamente", user: deletedUser});
+}
+function getUserById(req, res) {
+    const  { email }  = req.params;
+    //const userEmail = parseInt(id);
+    const user = users.find(user => user.email === email);
+    
+
+    if (!user) {
+        return res.status(404).json({ error: 'Usuario no encontrado. Verifique el email ingresado o verifique si el usuario existe' });
+    }
+
+    return res.status(200).json(user);
+    }
+
 
 module.exports = {
+    users,
     registerUser,
     getAllUsers,
+    deleteUser,
+    updateUser,
+    getUserById,
 };

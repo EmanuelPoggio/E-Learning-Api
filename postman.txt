@@ -1,18 +1,36 @@
-//Users creation:
+//Courses post:
 {
-  "name": "NombreUsuarioa4",
-  "dni": 40404040,
-  "email": "correo@example.coma5",
-  "password": "contraseña123a2",
-  "role": "estudiante", // o profesor
-  "enrolledCourses": 1
+    "name": "Matematicas",
+    "description": "descripcion del cursoo",
+    "lessons": "lecciones que contienee"
+}
+//Users post:
+{
+  "name": "Nombre del usuario",
+  "dni": "Número de identificación",
+  "email": "correo@ejeemplo.como",
+  "password": "contraseña",
+  "role": "estudiante",
+  "enrolledCourses": ["Matematicas"]
+}
+//Users get:
+http://localhost:3000/api/users/correo@ejemplo.com
+
+//Lessons post
+{
+    "name": "Leccion I",
+    "description": "descripcion de la leccion",
+    "relatedCourse": ["Matematicas"]
 }
 
-//Courses creation:
+//Lessons get
+http://localhost:3000/api/lessons/Matematicas
+
+
+
+//Question post
 {
-    "name": "Nombre del curso",
-    "description": "descripcion del curso",
-    "lessons": "lecciones que contiene"
+    "relatedLesson": "Leccion I",
+    "question": "¿Cuanto es la raiz cuadrada de 8?",
+    "answer": "2.82"
 }
-
-
