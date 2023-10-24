@@ -14,7 +14,9 @@ HOW TO USE
     2. “node src/server.js “
         - Debera aparecer el siguiente mensaje “Server is running on port 3000”
 4. Nos dirigimos a Postman, ThunderClient o nuestra herramienta favorita para realizar las peticiones y pruebas de Endpoints.
+   
 <---------------------------------------------------------------------------------------------------------------------------->
+
 Verbos HTTP la API: 
 
 - Courses
@@ -43,7 +45,7 @@ Verbos HTTP la API:
     - PUT [http://localhost:3000/api/](http://localhost:3000/api/courses)questions/{id} = Para modificar una pregunta
     - DELETE [http://localhost:3000/api/](http://localhost:3000/api/courses)questions/{id} = Para eliminar una pregunta
     - GET [http://localhost:3000/api/](http://localhost:3000/api/courses)questions/{name} = Para buscar todas las preguntas relacionadas con una leccion (Por ejemplo queremos buscar todas las preguntas de “Leccion I” ⇒ [http://localhost:3000/api/](http://localhost:3000/api/courses)questions/Leccion I )
-
+      
 <---------------------------------------------------------------------------------------------------------------------------->
 
 ## Puntos a tener en cuenta
