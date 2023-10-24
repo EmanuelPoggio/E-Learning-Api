@@ -1,6 +1,6 @@
 # README
 
-HOW TO USE 
+## HOW TO USE 
 
 1. Descargamos e Instalamos Node.js:
     - Ve al sitio web oficial de Node.js en https://nodejs.org/.
@@ -17,7 +17,7 @@ HOW TO USE
    
 <---------------------------------------------------------------------------------------------------------------------------->
 
-Verbos HTTP la API: 
+## VERBOS HTTP 
 
 - Courses
     - GET http://localhost:3000/api/courses = Para obtener un listado de todos los cursos
