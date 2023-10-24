@@ -37,7 +37,7 @@ function updateQuestion(req, res) {
 	if (questionIndex === -1) {
     return res.status(404).json({error: "Pregunta no encontrada, revise el ID"});
 	}
-    
+
     questions[questionIndex].relatedLesson = relatedLesson;
 	questions[questionIndex].question = question;
 	questions[questionIndex].answer = answer;
@@ -53,6 +53,25 @@ function deleteQuestion(req, res) {
     }
     const deletedQuestion = questions.splice(questionIndex,1)[0];
     return res.status(200).json({message: "Pregunta eliminada correctamente", question: deleteQuestion})
+}
+function getQuestionsByLesson(req, res){
+    const { name } = req.params;
+
+    const course = courses.find(course => course.name === name);
+
+    if (!course) {
+        return res.status(404).json({ error: 'Curso no encontrado' });
+    }
+
+    const enrolledUsers = users
+    .filter(user => user.enrolledCourses.includes(course.name))
+    .map(user => {
+        const {id, name, email, role, enrolledCourses} = user;
+        return {id, name, email, role, enrolledCourses};
+    });
+
+    const relatedLesson = lessons.filter(lesson => lesson.relatedCourse.includes(course.name));
+    return res.status(200).json({ course, enrolledUsers, relatedLesson });
 }
 
 module.exports = {

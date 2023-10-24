@@ -15,6 +15,7 @@ db.once("open",function() {
   console.log("Conexion a MongoDB establecida de manera exitosa")
 });
 */ 
+
 app.use(bodyParser.json());
 
 
