@@ -51,4 +51,5 @@ Verbos HTTP la API:
 1. Hay un archivo llamado postman.txt donde hay ejemplo simples para los post, para ahorrarse la escritura del JSON a la hora de las pruebas.
 2. Esta API se realizo con NodeJS 14.4.0 y NPM 6.14.5
 3. NO es apta para entorno productivo. Esta pensado como “Desarrollo”, ya que no contiene base de datos. En caso de querer colocarle una base de datos recomiendo MongoDB utilizando Mongoose
-4. Se busco mantener el desarrollo simple. Keep it simple.
+4. Estaba haciendo la BBDD en Mongo y las conexiones, pero no llegue con el tiempo por mi trabajo. Lo siento, equipo 
+5. Se busco mantener el desarrollo simple. Keep it simple.
