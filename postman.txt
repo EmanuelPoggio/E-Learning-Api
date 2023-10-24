@@ -1,0 +1,18 @@
+//Users creation:
+{
+  "name": "NombreUsuarioa4",
+  "dni": 40404040,
+  "email": "correo@example.coma5",
+  "password": "contraseña123a2",
+  "role": "estudiante", // o profesor
+  "enrolledCourses": 1
+}
+
+//Courses creation:
+{
+    "name": "Nombre del curso",
+    "description": "descripcion del curso",
+    "lessons": "lecciones que contiene"
+}
+
+

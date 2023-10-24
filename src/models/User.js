@@ -5,6 +5,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    dni: {
+        type: String,
+        required: true,
+    },
     email: {
         type: String,
         required: true,
@@ -14,10 +18,17 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    profession: {
+    role: {
         type: String,
         required: true,
-    }
+        enum: ["profesor","estudiante"],
+    },
+    enrolledCourses: [{
+        //type: mongoose.Schema.Types.ObjectID,
+        type: String,
+        required: true,
+        //ref: "Course",
+    }],
 });
 
 const User = mongoose.model('User', userSchema);
